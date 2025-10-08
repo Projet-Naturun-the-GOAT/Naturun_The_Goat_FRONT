@@ -1,0 +1,30 @@
+{
+  "name": "naturun_the_goat_front",
+  "version": "1.0.0",
+  "description": "Projet de deuxième année de Master MIAGE à l'Université Evry-Paris Saclay en Projet Applicatif/Architecture Orientée Services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+     "dev": "ts-node-dev --respawn src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Projet-Naturun-the-GOAT/Naturun_The_Goat_FRONT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Projet-Naturun-the-GOAT/Naturun_The_Goat_FRONT/issues"
+  },
+  "homepage": "https://github.com/Projet-Naturun-the-GOAT/Naturun_The_Goat_FRONT#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.7.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
