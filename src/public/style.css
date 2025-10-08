@@ -1,11 +1,107 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin-top: 50px;
+/* Reset basique */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-.buttons button {
-  margin: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+
+/* Body */
+body {
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header & Menu */
+header {
+  background-color: rgba(0,0,0,0.5);
+  padding: 1rem 2rem;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.menu-items {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.menu-items a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.menu-items a::after {
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #fff;
+  transition: 0.3s;
+}
+
+.menu-items a:hover::after {
+  width: 100%;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.main h1 {
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+}
+
+.main .buttons {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  background-color: #fff;
+  color: #4e54c8;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #4e54c8;
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Footer */
+footer {
+  background-color: rgba(0,0,0,0.5);
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
 }

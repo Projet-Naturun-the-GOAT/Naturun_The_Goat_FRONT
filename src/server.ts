@@ -1,14 +1,14 @@
 import express from "express";
-import routes from "./routes";
 import path from "path";
+import routes from "./routes";
 
 const app = express();
 const PORT = 3000;
 
-// Fichiers statiques (HTML, CSS, JS)
+// Fichiers statiques
 app.use(express.static(path.join(__dirname, "public")));
 
-// Routes API
+app.use(express.json());
 app.use("/", routes);
 
 app.listen(PORT, () => {

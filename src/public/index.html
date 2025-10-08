@@ -7,11 +7,26 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <h1>Bienvenue sur le front du projet Naturun !</h1>
-  <div class="buttons">
-    <button onclick="window.location.href='/ia'">Lancer l'IA</button>
-    <button onclick="window.location.href='/front'">Notre Partie</button>
-  </div>
-  <script src="/script.js"></script>
+  <header>
+  <nav class="menu">
+    <div class="logo">Naturun</div>
+    <ul class="menu-items">
+      <li><a href="/le-projet">Le projet</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <main class="main">
+    <h1>Bienvenue sur le front du projet Naturun !</h1>
+    <p>Choisissez une option pour commencer :</p>
+    <div class="buttons">
+      <a class="btn" href="/ia">Lancer l'IA</a>
+      <a class="btn" href="/partie">Notre Partie</a>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Naturun Project</p>
+  </footer>
 </body>
 </html>
