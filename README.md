@@ -25,7 +25,7 @@ Ce dépôt contient la partie front-office de l'application, développé avec un
 - Quentin AYRAL : Coordinateur Back
 - Idel SADI : Dev Full stack
 
-### 🚀 Présentation du projet
+### 🌀 Présentation du projet
 
 Ce projet a pour but de créer une IA capable de réussir un labyrinthe avec le moins de coups possibles.
 Un des objectifs est de réaliser plusieurs difficultés dans un premier temps puis de permettre d'y jouer.
