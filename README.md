@@ -38,33 +38,33 @@ Un des objectifs est de réaliser plusieurs difficultés dans un premier temps p
 
 ### 🧱 Règles de développement
 
-#### 🪣 Gestion des issues
+#### Gestion des issues
 
 - Crée une issue pour chaque tâche / bug.
 - Utilise les labels (bug, feature, enhancement, documentation, etc.).
 - Lie chaque issue à une PR.
 
-##### 🌿 Nommage des branches
+##### Nommage des branches
 
 - feature/<nom_fonctionnalité> pour les nouvelles features.
 - fix/<nom_bug> pour les corrections.
 - refactor/<nom> pour les refactorisations.
 
-##### 🔁 Pull Requests
+##### Pull Requests
 
 Une PR = une fonctionnalité / un correctif.
 Vérifie que les tests passent avant soumission.
 Au moins 1 review approuvée avant merge. (aide de GitHub Copilot)
 
 #### ⚙️ Installation & utilisation
-##### 1️⃣ Prérequis
+##### Prérequis
 - Node.js version 20.18.0 recommandé.
 - Visual Studio Code 
   
-##### 2️⃣ Installation
+##### Installation
 1. `git clone https://github.com/Projet-Naturun-the-GOAT/Naturun_The_Goat_FRONT.git`
 2. `cd Naturun_The_Goat_FRONT`
 3. `npm install`
-##### 3️⃣ Lancement du projet     
+##### Lancement du projet     
 1. `npm run dev`
 2. Se rendre à l'adresse http://localhost:3000/
