@@ -8,13 +8,13 @@
 </head>
 <body>
   <header>
-  <nav class="menu">
-    <div class="logo">Naturun</div>
-    <ul class="menu-items">
-      <li><a href="/le-projet">Le projet</a></li>
-    </ul>
-  </nav>
-</header>
+    <nav class="menu">
+      <div class="logo">Naturun</div>
+      <ul class="menu-items">
+        <li><a href="/le-projet">Le projet</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <main class="main">
     <h1>Bienvenue sur le front du projet Naturun !</h1>
@@ -22,11 +22,35 @@
     <div class="buttons">
       <a class="btn" href="/ia">Lancer l'IA</a>
       <a class="btn" href="/partie">Notre Partie</a>
+      <!-- Nouveau bouton de test -->
+      <button id="test-api" class="btn" type="button">Tester l'API</button>
     </div>
+
+    <!-- Zone d’affichage du message -->
+    <p id="api-result"></p>
   </main>
 
   <footer>
     <p>&copy; 2025 Naturun Project</p>
   </footer>
+
+  <script>
+    const btn = document.getElementById('test-api');
+    const out = document.getElementById('api-result');
+
+    btn.addEventListener('click', async () => {
+      out.textContent = 'Appel en cours...';
+      try {
+        // ⚠️ URL directe de l’API FastAPI en local
+        const res = await fetch('http://127.0.0.1:8000/api/bonjour');
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        out.textContent = data.message ?? 'Réponse reçue (pas de message)';
+      } catch (e) {
+        console.error(e);
+        out.textContent = "Erreur lors de l'appel API ❌";
+      }
+    });
+  </script>
 </body>
 </html>
