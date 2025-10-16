@@ -1,4 +1,4 @@
-/* Reset basique */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -6,30 +6,45 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Body */
-body {
-  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+/* BODY */
+body.home {
+  background: radial-gradient(circle at center, #000015 0%, #000010 100%);
   color: #fff;
   min-height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
-/* Header & Menu */
-header {
-  background-color: rgba(0,0,0,0.5);
-  padding: 1rem 2rem;
+/* Overlay effet arcade */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
 }
 
+/* HEADER */
 .menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.2rem 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
 }
 
 .menu .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
 }
 
 .menu-items {
@@ -42,66 +57,121 @@ header {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
-  position: relative;
+  transition: color 0.2s;
 }
 
-.menu-items a::after {
-  content: '';
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background-color: #fff;
-  transition: 0.3s;
+.menu-items a:hover,
+.menu-items a:focus {
+  color: #0ff;
+  outline: none;
 }
 
-.menu-items a:hover::after {
-  width: 100%;
-}
-
-/* Main */
-.main {
+/* HERO */
+.hero {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  gap: 1.5rem;
-  padding: 2rem;
+  z-index: 2;
+  padding: 2rem 1rem;
 }
 
-.main h1 {
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
-}
-
-.main .buttons {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.btn {
-  padding: 1rem 2rem;
-  background-color: #fff;
-  color: #4e54c8;
-  border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background-color: #4e54c8;
+.game-title {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 6px;
+  font-size: clamp(4rem, 10vw, 6rem);
+  text-transform: uppercase;
   color: #fff;
-  transform: scale(1.05);
+  text-shadow:
+    0 0 8px #0ff,
+    0 0 16px #0ff,
+    0 0 32px #00f0ff;
+  animation: glow 1.8s ease-in-out infinite alternate;
 }
 
-/* Footer */
+@keyframes glow {
+  from { text-shadow: 0 0 10px #0ff, 0 0 20px #00ffff; }
+  to { text-shadow: 0 0 20px #00ffff, 0 0 40px #0ff; }
+}
+
+.subtitle {
+  margin-top: 1rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  opacity: 0.85;
+  text-shadow: 0 0 8px #00f0ff;
+}
+
+/* --- BOUTONS --- */
+.actions {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Style commun */
+.btn-play,
+.btn-secondary {
+  display: inline-block;
+  padding: 0.95rem 2.25rem;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  box-shadow: 0 0 20px rgba(0,216,255,0.18);
+}
+
+/* Jouer solo */
+.btn-play {
+  background: linear-gradient(180deg,#00f0ff 0%, #00d8ff 100%);
+  color: #000;
+  box-shadow: 0 10px 30px rgba(0,216,255,0.25), 0 0 25px #00d8ff;
+}
+
+.btn-play:hover,
+.btn-play:focus {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,216,255,0.4), 0 0 45px #00f0ff;
+  outline: none;
+}
+
+/* VS IA — même importance, mais inversé (fond sombre, halo cyan) */
+.btn-secondary {
+  background: linear-gradient(180deg, rgba(0,240,255,0.15) 0%, rgba(0,216,255,0.05) 100%);
+  border: 2px solid #00eaff;
+  color: #00faff;
+  box-shadow: 0 10px 30px rgba(0,216,255,0.25), 0 0 25px #00d8ff;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background: linear-gradient(180deg, rgba(0,240,255,0.3) 0%, rgba(0,216,255,0.15) 100%);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,216,255,0.4), 0 0 45px #00f0ff;
+  outline: none;
+}
+
+
+/* Focus visible for keyboard users */
+a:focus {
+  box-shadow: 0 0 0 4px rgba(0,240,255,0.12);
+}
+
+/* FOOTER */
 footer {
-  background-color: rgba(0,0,0,0.5);
   text-align: center;
   padding: 1rem;
+  background: rgba(0,0,0,0.6);
   font-size: 0.9rem;
+  z-index: 2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 520px) {
+  .actions { flex-direction: column; gap: 0.9rem; }
+  .btn-play, .btn-secondary { width: 100%; text-align: center; }
 }
