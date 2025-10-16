@@ -1,0 +1,209 @@
+/* IA page stylesheet - style arcade adapté pour /ia */
+
+/* Reset minimal (n'affecte pas le style global lourdement) */
+:root {
+  --bg-top: #000015;
+  --bg-bottom: #000010;
+  --panel-bg: rgba(0,0,0,0.38);
+  --panel-border: rgba(255,255,255,0.10);
+  --grid-bg: rgba(0,0,0,0.18);
+  --line: rgba(255,255,255,0.25);
+  --axis: rgba(255,255,255,0.45);
+  --accent: #00f0ff;
+  --accent-strong: #00d8ff;
+  --text: #ffffff;
+  --muted: rgba(255,255,255,0.75);
+  --radius: 12px;
+  --max-width: 1100px;
+}
+
+/* Corps de page — compatible avec le thème global mais sans overflow hidden */
+html, body {
+  height: 100%;
+  background: radial-gradient(circle at center, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  color: var(--text);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+}
+
+/* Header / nav — garde la lisibilité et le néon */
+header {
+  background: rgba(0,0,0,0.56);
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  position: relative;
+  z-index: 5;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.menu .logo {
+  font-weight: 700;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(0,240,255,0.12);
+  font-size: 1.25rem;
+}
+
+.menu-items {
+  list-style: none;
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-items a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.25rem 0.35rem;
+  transition: color 160ms ease, text-shadow 160ms;
+}
+
+.menu-items a:hover,
+.menu-items a:focus {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(0,240,255,0.14);
+  outline: none;
+}
+
+/* Main container */
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+  padding: 1.5rem;
+  max-width: var(--max-width);
+  margin: 1.5rem auto;
+  width: calc(100% - 2rem);
+  z-index: 2;
+}
+
+/* Titre de la page */
+.main h1 {
+  text-align: center;
+  font-size: 1.45rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.65rem;
+  color: var(--text);
+  text-shadow: 0 0 8px rgba(0,240,255,0.06);
+}
+
+/* La grille responsive wrap */
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: 1fr; padding: 0; }
+}
+
+/* Panel style épuré et contrasté */
+.panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.02);
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Aside spécifique des paramètres */
+aside.panel h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Zone centrale / canvas */
+.grid-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  padding: 0.5rem;
+}
+
+/* Canvas — styles visuels + responsive */
+canvas#maze {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.30));
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55), 0 0 18px rgba(0,240,255,0.03);
+  image-rendering: crisp-edges; /* utile pour rendu grille net */
+}
+
+/* Texte d'aide et métadonnées */
+.hint {
+  opacity: 0.92;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.meta {
+  opacity: 0.78;
+  font-size: 0.9rem;
+  margin-top: 0.4rem;
+  color: var(--muted);
+}
+
+/* Footer discret */
+footer {
+  max-width: var(--max-width);
+  margin: 1.25rem auto;
+  text-align: center;
+  padding: 0.8rem;
+  color: rgba(255,255,255,0.66);
+  font-size: 0.85rem;
+  border-radius: 8px;
+}
+
+/* Accessibilité & focus */
+button:focus, a:focus, input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0,240,255,0.08);
+  border-radius: 6px;
+}
+
+/* Petite micro-animation au chargement sur le canvas (si script ajoute/remplace une classe) */
+.canvas-ready {
+  animation: canvas-appear 400ms ease-out both;
+}
+@keyframes canvas-appear {
+  from { transform: translateY(6px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Ajustements finaux pour éviter conflits avec le style global "home" */
+body.home .menu,
+body.home header {
+  /* si ta page principale utilise body.home, ces règles sont neutres ici */
+}
+
+/* Fin du fichier IA */
