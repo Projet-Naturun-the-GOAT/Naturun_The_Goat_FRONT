@@ -15,9 +15,10 @@ router.get("/ia", (_req, res) => {
   res.sendFile(path.join(PUBLIC, "ia.html"));
 });
 
-router.get("/le-projet", (_req, res) => {
-  res.sendFile(path.join(PUBLIC, "le-projet.html"));
+router.get("/partie", (_req, res) => {
+  res.sendFile(path.join(PUBLIC, "partie.html"));
 });
+
 
 export default router;
 

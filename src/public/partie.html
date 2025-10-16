@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Naturun - IA</title>
-  <link rel="stylesheet" href="/ia-style.css" />
+  <title>Naturun - Notre Partie</title>
+  <link rel="stylesheet" href="/style.css" />
   <style>
-    
     .wrap { max-width: 1100px; margin: 2rem auto; display: grid; grid-template-columns: 260px 1fr; gap: 1rem; padding: 0 1rem; }
     .panel { background-color: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 1rem; }
     .grid-box { display:flex; align-items:center; justify-content:center; }
@@ -23,21 +22,21 @@
       <ul class="menu-items">
         <li><a href="/">Accueil</a></li>
         <li><a href="/le-projet">Le projet</a></li>
-        <li><a href="/partie">Lancer Partie</a></li>
+        <li><a href="/ia">Lancer l'IA</a></li>
       </ul>
     </nav>
   </header>
 
   <main class="main" style="gap:1rem; align-items:stretch;">
-    <h1 style="text-align:center;">Interface IA</h1>
+    <h1 style="text-align:center;">Notre Partie</h1>
     <div class="wrap">
       <aside class="panel">
         <h2 style="margin-bottom:.5rem;">Paramètres</h2>
       </aside>
 
       <section class="panel grid-box">
-        <!-- Grille fixe sur canvas -->
-        <canvas id="maze" width="900" height="540" aria-label="Grille IA"></canvas>
+        
+        <canvas id="maze" width="900" height="540" aria-label="Grille Partie"></canvas>
       </section>
     </div>
   </main>
@@ -46,6 +45,7 @@
     <p>&copy; 2025 Naturun Project</p>
   </footer>
 
-  <script type="module" src="/ia.js" defer></script>
+  
+ <script type="module" src="/partie.js" defer></script>
 </body>
 </html>
