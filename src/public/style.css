@@ -1,4 +1,4 @@
-/* Reset basique */
+/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -6,30 +6,45 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Body */
-body {
-  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+/* ---------------- BODY INDEX ---------------- */
+body.home {
+  background: radial-gradient(circle at center, #000015 0%, #000010 100%);
   color: #fff;
   min-height: 100vh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
-/* Header & Menu */
-header {
-  background-color: rgba(0,0,0,0.5);
-  padding: 1rem 2rem;
+/* Overlay effet arcade */
+body.home .overlay {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
 }
 
+/* HEADER */
 .menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.2rem 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
 }
 
 .menu .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
 }
 
 .menu-items {
@@ -42,66 +57,233 @@ header {
   color: #fff;
   text-decoration: none;
   font-weight: 500;
-  position: relative;
+  transition: color 0.2s;
 }
 
-.menu-items a::after {
-  content: '';
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  bottom: -4px;
-  left: 0;
-  background-color: #fff;
-  transition: 0.3s;
+.menu-items a:hover,
+.menu-items a:focus {
+  color: #0ff;
+  outline: none;
 }
 
-.menu-items a:hover::after {
-  width: 100%;
-}
-
-/* Main */
-.main {
+/* HERO */
+.hero {
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  gap: 1.5rem;
-  padding: 2rem;
+  z-index: 2;
+  padding: 2rem 1rem;
 }
 
-.main h1 {
-  font-size: 2.5rem;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
-}
-
-.main .buttons {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.btn {
-  padding: 1rem 2rem;
-  background-color: #fff;
-  color: #4e54c8;
-  border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background-color: #4e54c8;
+/* TITRE INDEX */
+.game-title {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 6px;
+  font-size: clamp(4rem, 10vw, 6rem);
+  text-transform: uppercase;
   color: #fff;
-  transform: scale(1.05);
+  text-shadow:
+    0 0 8px #0ff,
+    0 0 16px #0ff,
+    0 0 32px #00f0ff;
+  animation: glow 1.8s ease-in-out infinite alternate;
 }
 
-/* Footer */
+@keyframes glow {
+  from { text-shadow: 0 0 10px #0ff, 0 0 20px #00ffff; }
+  to { text-shadow: 0 0 20px #00ffff, 0 0 40px #0ff; }
+}
+
+.subtitle {
+  margin-top: 1rem;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  opacity: 0.85;
+  text-shadow: 0 0 8px #00f0ff;
+}
+
+/* ---------------- BOUTONS ---------------- */
+.actions {
+  display: flex;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-play,
+.btn-secondary {
+  display: inline-block;
+  padding: 0.95rem 2.25rem;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  box-shadow: 0 0 20px rgba(0,216,255,0.18);
+}
+
+/* Bouton principal */
+.btn-play {
+  background: linear-gradient(180deg,#00f0ff 0%, #00d8ff 100%);
+  color: #000;
+  box-shadow: 0 10px 30px rgba(0,216,255,0.25), 0 0 25px #00d8ff;
+}
+
+.btn-play:hover,
+.btn-play:focus {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,216,255,0.4), 0 0 45px #00f0ff;
+  outline: none;
+}
+
+/* Bouton secondaire */
+.btn-secondary {
+  background: linear-gradient(180deg, rgba(0,240,255,0.15) 0%, rgba(0,216,255,0.05) 100%);
+  border: 2px solid #00eaff;
+  color: #00faff;
+  box-shadow: 0 10px 30px rgba(0,216,255,0.25), 0 0 25px #00d8ff;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background: linear-gradient(180deg, rgba(0,240,255,0.3) 0%, rgba(0,216,255,0.15) 100%);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0,216,255,0.4), 0 0 45px #00f0ff;
+  outline: none;
+}
+
+/* Focus pour clavier */
+a:focus {
+  box-shadow: 0 0 0 4px rgba(0,240,255,0.12);
+}
+
+/* FOOTER */
 footer {
-  background-color: rgba(0,0,0,0.5);
   text-align: center;
   padding: 1rem;
+  background: rgba(0,0,0,0.6);
   font-size: 0.9rem;
+  z-index: 2;
 }
+
+/* Responsive */
+@media (max-width: 520px) {
+  .actions { flex-direction: column; gap: 0.9rem; }
+  .btn-play, .btn-secondary { width: 100%; text-align: center; }
+}
+
+
+/* ---------------- PAGE PROJET ---------------- */
+body.projet {
+  background: radial-gradient(circle at center, #000015 0%, #000010 100%);
+  color: #fff; /* texte par défaut en blanc */
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: 'Orbitron', sans-serif;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* HEADER */
+body.projet .menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 2;
+}
+
+body.projet .menu .logo {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+
+body.projet .menu-items {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+body.projet .menu-items a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+body.projet .menu-items a:hover,
+body.projet .menu-items a:focus {
+  color: #0ff;
+  outline: none;
+}
+
+/* MAIN CONTENT */
+body.projet .main-content {
+  flex: 1;
+  max-width: 900px;
+  margin: auto;
+  padding: 3rem 2rem;
+  z-index: 2;
+}
+
+body.projet .main-content h1 {
+  font-size: clamp(3rem, 8vw, 5rem);
+  text-align: center;
+  color: #ffffff; /* blanc pur */
+  text-shadow:
+    0 0 4px #0ff,
+    0 0 8px #0ff,
+    0 0 12px #00f0ff; /* glow subtil */
+  margin-bottom: 2rem; /* plus d'espace après le titre */
+}
+
+body.projet .main-content h2 {
+  font-size: 1.5rem;
+  margin-top: 2.5rem; /* plus d'espace avant sous-titres */
+  margin-bottom: 1rem; /* espace après sous-titres */
+  color: #ffffff; /* blanc pur */
+  text-shadow: 0 0 6px #00f0ff;
+}
+
+body.projet .main-content p,
+body.projet .main-content li,
+body.projet .main-content ol li {
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-top: 0.75rem;
+  opacity: 0.95; /* légèrement plus opaque */
+}
+
+/* FOOTER */
+body.projet footer {
+  text-align: center;
+  padding: 1.5rem;
+  background: rgba(0,0,0,0.6);
+  font-size: 0.9rem;
+  z-index: 2;
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+  body.projet .main-content h1 {
+    font-size: clamp(2rem, 10vw, 4rem);
+    margin-bottom: 1.5rem;
+  }
+  body.projet .main-content h2 {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 0.8rem;
+  }
+  body.projet .main-content p, 
+  body.projet .main-content li {
+    font-size: 0.95rem;
+  }
+}
+
