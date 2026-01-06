@@ -32,11 +32,38 @@
     <h1 style="text-align:center;">Interface IA</h1>
     <div class="wrap">
       <aside class="panel">
-        <h2 style="margin-bottom:.5rem;">Paramètres</h2>
-      </aside>
+  <h2>Contrôle IA</h2>
+  
+  <div class="control-group">
+    <button id="btn-ia" class="btn-primary">Lancer l'IA</button>
+    <button id="btn-reset" class="btn-secondary">Recommencer</button>
+  </div>
+
+  <div class="stats-container">
+    <div class="stat-item">
+      <span class="label">Action</span>
+      <span id="ia-action" class="value neon-text">-</span>
+    </div>
+    <div class="stat-item">
+      <span class="label">Statut</span>
+      <span id="ia-status" class="value">Prêt</span>
+    </div>
+    <div class="stat-item">
+        <span class="label">Pas effectués</span>
+        <span id="ia-steps" class="value neon-text">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="label">Vitesse</span>
+      <span class="value">5 pas/s</span>
+    </div>
+  </div>
+
+  <div class="hint">
+    <p>L'IA va calculer le chemin optimal en arrière-plan puis exécuter les mouvements.</p>
+  </div>
+</aside>
 
       <section class="panel grid-box">
-        <!-- Grille fixe sur canvas -->
         <canvas id="maze" width="900" height="540" aria-label="Grille IA"></canvas>
       </section>
     </div>
