@@ -44,6 +44,8 @@
     <div class="config-title">Entrainement</div>
     <label class="input-label" for="train-episodes">Episodes</label>
     <input id="train-episodes" type="number" min="1" step="1" value="200" />
+    <label class="input-label" for="train-max-steps">Pas max</label>
+    <input id="train-max-steps" type="number" min="1" step="1" value="500" />
   </div>
 
   <div class="config-box">
@@ -72,8 +74,14 @@
     </div>
     <div class="stat-item">
       <span class="label">Vitesse</span>
-      <span class="value">5 pas/s</span>
+      <span id="ia-speed-value" class="value">5 pas/s</span>
     </div>
+  </div>
+
+  <div class="config-box">
+    <div class="config-title">Vitesse de l'IA</div>
+    <label class="input-label" for="ia-speed">Pas par seconde</label>
+    <input id="ia-speed" type="range" min="1" max="60" step="1" value="5" />
   </div>
 
   <div class="hint">

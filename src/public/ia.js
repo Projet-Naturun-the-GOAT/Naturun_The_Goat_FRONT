@@ -15,6 +15,9 @@ const widthInput = document.getElementById("maze-width");
 const heightInput = document.getElementById("maze-height");
 const seedInput = document.getElementById("maze-seed");
 const trainEpisodesInput = document.getElementById("train-episodes");
+const trainMaxStepsInput = document.getElementById("train-max-steps");
+const speedInput = document.getElementById("ia-speed");
+const speedValue = document.getElementById("ia-speed-value");
 
 const TRAINING_DEFAULTS = {
   episodes: 200,
@@ -26,6 +29,7 @@ let btnIA = null;
 let btnReset = null;
 let btnConfigure = null;
 let btnTrain = null;
+let speedStepsPerSecond = 5;
 
 async function fetchMaze() {
   const res = await fetch(`${BASE_URL}/maze`);
@@ -75,7 +79,8 @@ async function playAIStep() {
       return;
     }
 
-    setTimeout(playAIStep, 200);
+    const delayMs = Math.max(10, Math.round(1000 / speedStepsPerSecond));
+    setTimeout(playAIStep, delayMs);
   } catch (error) {
     console.error("Erreur:", error);
     isRunning = false;
@@ -100,8 +105,13 @@ async function trainAI() {
   if (statusSpan) statusSpan.innerText = "Entrainement...";
 
   const episodes = parseInt(trainEpisodesInput?.value, 10);
+  const maxSteps = parseInt(trainMaxStepsInput?.value, 10);
   if (!Number.isFinite(episodes) || episodes < 1) {
     if (statusSpan) statusSpan.innerText = "Episodes invalides";
+    return;
+  }
+  if (!Number.isFinite(maxSteps) || maxSteps < 1) {
+    if (statusSpan) statusSpan.innerText = "Pas max invalides";
     return;
   }
 
@@ -112,6 +122,7 @@ async function trainAI() {
       body: JSON.stringify({
         ...TRAINING_DEFAULTS,
         episodes,
+        max_steps: maxSteps,
       }),
     });
     const data = await res.json();
@@ -175,6 +186,18 @@ document.addEventListener("DOMContentLoaded", () => {
     btnTrain = document.getElementById("btn-train");
     btnReset = document.getElementById("btn-reset");
     btnConfigure = document.getElementById("btn-configure");
+
+    if (speedInput) {
+      speedStepsPerSecond = parseInt(speedInput.value, 10) || 5;
+      if (speedValue) speedValue.innerText = `${speedStepsPerSecond} pas/s`;
+      speedInput.addEventListener("input", () => {
+        const nextSpeed = parseInt(speedInput.value, 10);
+        if (Number.isFinite(nextSpeed) && nextSpeed > 0) {
+          speedStepsPerSecond = nextSpeed;
+          if (speedValue) speedValue.innerText = `${speedStepsPerSecond} pas/s`;
+        }
+      });
+    }
 
     if(btnIA) {
         btnIA.addEventListener("click", () => {
