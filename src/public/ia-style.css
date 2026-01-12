@@ -34,40 +34,51 @@ header {
   z-index: 5;
 }
 
+/* ---------------- HEADER (Identique à Index) ---------------- */
 .menu {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  max-width: var(--max-width);
-  margin: 0 auto;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 5; /* Gardé à 5 pour passer au-dessus du canvas */
+  position: relative;
+  width: 100%; /* S'assure qu'il prend toute la largeur */
+  box-sizing: border-box; /* Important pour que le padding ne dépasse pas */
 }
 
 .menu .logo {
+  font-size: 1.7rem;
   font-weight: 700;
-  color: var(--accent);
-  text-shadow: 0 0 10px rgba(0,240,255,0.4);
-  font-size: 1.25rem;
+  color: #0ff;
+  text-shadow: 0 0 10px #0ff;
+}
+.menu .logo a {
+  color: #0ff;
+  text-decoration: none;
 }
 
 .menu-items {
   list-style: none;
   display: flex;
-  gap: 1.25rem;
+  gap: 2rem;
   margin: 0;
   padding: 0;
 }
 
 .menu-items a {
-  color: var(--text);
+  color: #fff;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 160ms ease;
+  font-weight: 500;
+  font-size: 1rem; /* Harmonisé avec l'index */
+  transition: color 0.2s;
 }
 
-.menu-items a:hover {
-  color: var(--accent);
-  text-shadow: 0 0 8px var(--accent);
+.menu-items a:hover,
+.menu-items a:focus {
+  color: #0ff;
+  outline: none;
+  text-shadow: none; /* Reset des ombres spécifiques à l'IA si nécessaire */
 }
 
 /* Main container */
