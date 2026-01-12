@@ -11,12 +11,34 @@ let isRunning = false;
 const actionSpan = document.getElementById("ia-action");
 const statusSpan = document.getElementById("ia-status");
 const stepsSpan = document.getElementById("ia-steps");
+const widthInput = document.getElementById("maze-width");
+const heightInput = document.getElementById("maze-height");
+const seedInput = document.getElementById("maze-seed");
+const trainEpisodesInput = document.getElementById("train-episodes");
+const trainMaxStepsInput = document.getElementById("train-max-steps");
+const speedInput = document.getElementById("ia-speed");
+const speedValue = document.getElementById("ia-speed-value");
+
+const TRAINING_DEFAULTS = {
+  episodes: 200,
+  max_steps: 500,
+  model_file: "agent_model.npy",
+};
+
+let btnIA = null;
+let btnReset = null;
+let btnConfigure = null;
+let btnTrain = null;
+let speedStepsPerSecond = 5;
 
 async function fetchMaze() {
   const res = await fetch(`${BASE_URL}/maze`);
   const data = await res.json();
   mazeData = data.maze;
   agentPos = data.agent;
+  if (mazeData.length && mazeData[0].length) {
+    grid.setDimensions(mazeData[0].length, mazeData.length);
+  }
   drawMaze();
 }
 
@@ -53,11 +75,12 @@ async function playAIStep() {
     if (data.done) {
       isRunning = false;
       statusSpan.innerHTML = `🏆 Arrivé en <span class="neon-text">${data.steps}</span> pas !`;
-      document.getElementById("btn-ia").innerText = "Lancer l'IA";
+      if (btnIA) btnIA.innerText = "Lancer l'IA";
       return;
     }
 
-    setTimeout(playAIStep, 200);
+    const delayMs = Math.max(10, Math.round(1000 / speedStepsPerSecond));
+    setTimeout(playAIStep, delayMs);
   } catch (error) {
     console.error("Erreur:", error);
     isRunning = false;
@@ -75,6 +98,82 @@ async function resetAgent() {
   drawMaze();
 }
 
+async function trainAI() {
+  if (isRunning) {
+    isRunning = false;
+  }
+  if (statusSpan) statusSpan.innerText = "Entrainement...";
+
+  const episodes = parseInt(trainEpisodesInput?.value, 10);
+  const maxSteps = parseInt(trainMaxStepsInput?.value, 10);
+  if (!Number.isFinite(episodes) || episodes < 1) {
+    if (statusSpan) statusSpan.innerText = "Episodes invalides";
+    return;
+  }
+  if (!Number.isFinite(maxSteps) || maxSteps < 1) {
+    if (statusSpan) statusSpan.innerText = "Pas max invalides";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BASE_URL}/train`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        ...TRAINING_DEFAULTS,
+        episodes,
+        max_steps: maxSteps,
+      }),
+    });
+    const data = await res.json();
+    if (statusSpan) {
+      statusSpan.innerText = `Entrainement ok (${data.episodes_trained} episodes)`;
+    }
+  } catch (error) {
+    console.error("Erreur entrainement:", error);
+    if (statusSpan) statusSpan.innerText = "Erreur entrainement";
+  }
+}
+
+async function configureMaze() {
+  const width = parseInt(widthInput?.value, 10);
+  const height = parseInt(heightInput?.value, 10);
+  const seedRaw = seedInput?.value?.trim();
+
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width < 5 || height < 5) {
+    if (statusSpan) statusSpan.innerText = "Dimensions invalides";
+    return;
+  }
+
+  const payload = { width, height };
+  if (seedRaw) payload.seed = Number(seedRaw);
+
+  isRunning = false;
+  if (btnIA) btnIA.innerText = "Lancer l'IA";
+  if (statusSpan) statusSpan.innerText = "Chargement...";
+
+  try {
+    const res = await fetch(`${BASE_URL}/configure`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    mazeData = data.maze;
+    agentPos = data.agent;
+    if (data.width && data.height) {
+      grid.setDimensions(data.width, data.height);
+    } else if (mazeData.length && mazeData[0].length) {
+      grid.setDimensions(mazeData[0].length, mazeData.length);
+    }
+    await resetAgent();
+    if (statusSpan) statusSpan.innerText = "Prêt";
+  } catch (error) {
+    console.error("Erreur configuration:", error);
+    if (statusSpan) statusSpan.innerText = "Erreur configuration";
+  }
+}
+
 function drawMaze() {
   grid.drawGrid();
   grid.fromMatrix(mazeData);
@@ -83,8 +182,22 @@ function drawMaze() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const btnIA = document.getElementById("btn-ia");
-    const btnReset = document.getElementById("btn-reset");
+    btnIA = document.getElementById("btn-ia");
+    btnTrain = document.getElementById("btn-train");
+    btnReset = document.getElementById("btn-reset");
+    btnConfigure = document.getElementById("btn-configure");
+
+    if (speedInput) {
+      speedStepsPerSecond = parseInt(speedInput.value, 10) || 5;
+      if (speedValue) speedValue.innerText = `${speedStepsPerSecond} pas/s`;
+      speedInput.addEventListener("input", () => {
+        const nextSpeed = parseInt(speedInput.value, 10);
+        if (Number.isFinite(nextSpeed) && nextSpeed > 0) {
+          speedStepsPerSecond = nextSpeed;
+          if (speedValue) speedValue.innerText = `${speedStepsPerSecond} pas/s`;
+        }
+      });
+    }
 
     if(btnIA) {
         btnIA.addEventListener("click", () => {
@@ -98,6 +211,18 @@ document.addEventListener("DOMContentLoaded", () => {
             resetAgent();
             if(btnIA) btnIA.innerText = "Lancer l'IA";
         });
+    }
+
+    if (btnTrain) {
+      btnTrain.addEventListener("click", () => {
+        trainAI();
+      });
+    }
+
+    if (btnConfigure) {
+      btnConfigure.addEventListener("click", () => {
+        configureMaze();
+      });
     }
 });
 
