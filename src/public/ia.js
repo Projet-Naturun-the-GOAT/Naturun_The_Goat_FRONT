@@ -77,6 +77,20 @@ async function playAIStep() {
       isRunning = false;
       statusSpan.innerHTML = `🏆 Arrivé en <span class="neon-text">${data.steps}</span> pas !`;
       if (btnIA) btnIA.innerText = "Lancer l'IA";
+
+      // --- GESTION FEU D'ARTIFICE ---
+      const fireworks = document.querySelector('.fireworks-overlay');
+      if (fireworks) {
+          // 1. On allume
+          fireworks.classList.add('active');
+
+          // 2. On éteint automatiquement après 5000ms (5 secondes)
+          setTimeout(() => {
+              fireworks.classList.remove('active');
+          }, 5000);
+      }
+      // ------------------------------
+
       return;
     }
 
