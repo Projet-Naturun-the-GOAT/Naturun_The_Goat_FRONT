@@ -251,3 +251,26 @@ footer {
   opacity: 0.6;
   font-size: 0.8rem;
 }
+
+/* --- FIREWORKS EFFECT --- */
+.fireworks-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Important : permet de cliquer au travers (sur les boutons) */
+  z-index: 10; /* Au-dessus de tout */
+  
+  /* GIF de feu d'artifice transparent */
+  background-image: url('https://i.gifer.com/VZvx.gif');
+  
+  background-size: 500px; /* Taille des explosions */
+  background-repeat: repeat; /* Répète le motif sur tout l'écran */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.fireworks-overlay.active {
+  opacity: 1;
+}
