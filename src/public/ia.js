@@ -11,12 +11,22 @@ let isRunning = false;
 const actionSpan = document.getElementById("ia-action");
 const statusSpan = document.getElementById("ia-status");
 const stepsSpan = document.getElementById("ia-steps");
+const widthInput = document.getElementById("maze-width");
+const heightInput = document.getElementById("maze-height");
+const seedInput = document.getElementById("maze-seed");
+
+let btnIA = null;
+let btnReset = null;
+let btnConfigure = null;
 
 async function fetchMaze() {
   const res = await fetch(`${BASE_URL}/maze`);
   const data = await res.json();
   mazeData = data.maze;
   agentPos = data.agent;
+  if (mazeData.length && mazeData[0].length) {
+    grid.setDimensions(mazeData[0].length, mazeData.length);
+  }
   drawMaze();
 }
 
@@ -53,7 +63,7 @@ async function playAIStep() {
     if (data.done) {
       isRunning = false;
       statusSpan.innerHTML = `🏆 Arrivé en <span class="neon-text">${data.steps}</span> pas !`;
-      document.getElementById("btn-ia").innerText = "Lancer l'IA";
+      if (btnIA) btnIA.innerText = "Lancer l'IA";
       return;
     }
 
@@ -75,6 +85,47 @@ async function resetAgent() {
   drawMaze();
 }
 
+async function configureMaze() {
+  const width = parseInt(widthInput?.value, 10);
+  const height = parseInt(heightInput?.value, 10);
+  const seedRaw = seedInput?.value?.trim();
+
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width < 5 || height < 5) {
+    if (statusSpan) statusSpan.innerText = "Dimensions invalides";
+    return;
+  }
+
+  const payload = { width, height };
+  if (seedRaw) payload.seed = Number(seedRaw);
+
+  isRunning = false;
+  if (btnIA) btnIA.innerText = "Lancer l'IA";
+  if (statusSpan) statusSpan.innerText = "Chargement...";
+
+  try {
+    const res = await fetch(`${BASE_URL}/configure`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    mazeData = data.maze;
+    agentPos = data.agent;
+    if (data.width && data.height) {
+      grid.setDimensions(data.width, data.height);
+    } else if (mazeData.length && mazeData[0].length) {
+      grid.setDimensions(mazeData[0].length, mazeData.length);
+    }
+    if (actionSpan) actionSpan.innerText = "-";
+    if (stepsSpan) stepsSpan.innerText = "0";
+    if (statusSpan) statusSpan.innerText = "Prêt";
+    drawMaze();
+  } catch (error) {
+    console.error("Erreur configuration:", error);
+    if (statusSpan) statusSpan.innerText = "Erreur configuration";
+  }
+}
+
 function drawMaze() {
   grid.drawGrid();
   grid.fromMatrix(mazeData);
@@ -83,8 +134,9 @@ function drawMaze() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const btnIA = document.getElementById("btn-ia");
-    const btnReset = document.getElementById("btn-reset");
+    btnIA = document.getElementById("btn-ia");
+    btnReset = document.getElementById("btn-reset");
+    btnConfigure = document.getElementById("btn-configure");
 
     if(btnIA) {
         btnIA.addEventListener("click", () => {
@@ -98,6 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
             resetAgent();
             if(btnIA) btnIA.innerText = "Lancer l'IA";
         });
+    }
+
+    if (btnConfigure) {
+      btnConfigure.addEventListener("click", () => {
+        configureMaze();
+      });
     }
 });
 

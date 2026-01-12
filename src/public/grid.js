@@ -16,6 +16,14 @@ export class Grid {
     };
   }
 
+  setDimensions(cols, rows) {
+    if (!cols || !rows) return;
+    this.cols = cols;
+    this.rows = rows;
+    this.cellW = this.canvas.width / cols;
+    this.cellH = this.canvas.height / rows;
+  }
+
   drawGrid() {
     const { ctx, canvas, palette } = this;
     ctx.fillStyle = palette.bg;

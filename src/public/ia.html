@@ -39,6 +39,17 @@
     <button id="btn-reset" class="btn-secondary">Recommencer</button>
   </div>
 
+  <div class="config-box">
+    <div class="config-title">Taille du labyrinthe</div>
+    <label class="input-label" for="maze-width">Largeur</label>
+    <input id="maze-width" type="number" min="5" step="1" value="31" />
+    <label class="input-label" for="maze-height">Hauteur</label>
+    <input id="maze-height" type="number" min="5" step="1" value="31" />
+    <label class="input-label" for="maze-seed">Seed (optionnel)</label>
+    <input id="maze-seed" type="number" placeholder="aléatoire" />
+    <button id="btn-configure" class="btn-secondary">Appliquer taille</button>
+  </div>
+
   <div class="stats-container">
     <div class="stat-item">
       <span class="label">Action</span>
