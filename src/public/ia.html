@@ -36,7 +36,14 @@
   
   <div class="control-group">
     <button id="btn-ia" class="btn-primary">Lancer l'IA</button>
+    <button id="btn-train" class="btn-secondary">Entraîner l'IA</button>
     <button id="btn-reset" class="btn-secondary">Recommencer</button>
+  </div>
+
+  <div class="config-box">
+    <div class="config-title">Entrainement</div>
+    <label class="input-label" for="train-episodes">Episodes</label>
+    <input id="train-episodes" type="number" min="1" step="1" value="200" />
   </div>
 
   <div class="config-box">
