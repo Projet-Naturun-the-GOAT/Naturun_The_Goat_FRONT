@@ -31,9 +31,32 @@
     <h1 style="text-align:center;">Notre Partie</h1>
     <div class="wrap">
       <aside class="panel">
-        <h2 style="margin-bottom:.5rem;">Paramètres</h2>
-      </aside>
+  <h2>Paramètres</h2>
 
+  <div class="control-group">
+    <button id="btn-reset" class="btn-secondary">Recommencer</button>
+  </div>
+
+  <div class="stats-container">
+    <div class="stat-item">
+      <span class="label">Statut</span>
+      <span id="solo-status" class="value">Prêt</span>
+    </div>
+    <div class="stat-item">
+      <span class="label">Pas</span>
+      <span id="solo-steps" class="value neon-text">0</span>
+    </div>
+    <div class="stat-item">
+      <span class="label">Dernier move</span>
+      <span id="solo-lastmove" class="value neon-text">-</span>
+    </div>
+  </div>
+
+  <div class="hint">
+    <p>Contrôles : flèches directionnelles ou ZQSD.</p>
+  </div>
+
+</aside>
       <section class="panel grid-box">
         
         <canvas id="maze" width="900" height="540" aria-label="Grille Partie"></canvas>
