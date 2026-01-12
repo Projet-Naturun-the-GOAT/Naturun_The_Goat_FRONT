@@ -11,6 +11,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use("/", routes);
 
-app.listen(PORT, () => {
-  console.log(`✅ Front server running at http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`✅ Front server running at http://0.0.0.0:${PORT}`);
 });
