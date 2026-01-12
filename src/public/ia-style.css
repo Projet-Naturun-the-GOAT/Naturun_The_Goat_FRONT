@@ -200,6 +200,16 @@ aside.panel h2 {
   background: rgba(0, 240, 255, 0.1);
 }
 
+.btn-danger {
+  color: #ff5a5a;
+  border-color: #ff5a5a;
+}
+
+.btn-danger:hover {
+  background: rgba(255, 90, 90, 0.15);
+  box-shadow: 0 0 12px rgba(255, 90, 90, 0.25);
+}
+
 .stats-container {
   display: flex;
   flex-direction: column;

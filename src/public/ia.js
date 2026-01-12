@@ -29,6 +29,7 @@ let btnIA = null;
 let btnReset = null;
 let btnConfigure = null;
 let btnTrain = null;
+let btnMemory = null;
 let speedStepsPerSecond = 5;
 
 async function fetchMaze() {
@@ -96,6 +97,25 @@ async function resetAgent() {
   if (actionSpan) actionSpan.innerText = "-";
   if (stepsSpan) stepsSpan.innerText = "0";
   drawMaze();
+}
+
+async function resetMemory() {
+  try {
+    let res = await fetch(`${BASE_URL}/memory`, { method: "DELETE" });
+    if (!res.ok) {
+      res = await fetch(`${BASE_URL}/memoire`, { method: "DELETE" });
+    }
+    const data = await res.json();
+    agentPos = data.agent;
+    isRunning = false;
+    if (statusSpan) statusSpan.innerText = "Mémoire réinitialisée";
+    if (actionSpan) actionSpan.innerText = "-";
+    if (stepsSpan) stepsSpan.innerText = "0";
+    drawMaze();
+  } catch (error) {
+    console.error("Erreur reset mémoire:", error);
+    if (statusSpan) statusSpan.innerText = "Erreur reset mémoire";
+  }
 }
 
 async function trainAI() {
@@ -166,7 +186,7 @@ async function configureMaze() {
     } else if (mazeData.length && mazeData[0].length) {
       grid.setDimensions(mazeData[0].length, mazeData.length);
     }
-    await resetAgent();
+    await resetMemory();
     if (statusSpan) statusSpan.innerText = "Prêt";
   } catch (error) {
     console.error("Erreur configuration:", error);
@@ -186,6 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnTrain = document.getElementById("btn-train");
     btnReset = document.getElementById("btn-reset");
     btnConfigure = document.getElementById("btn-configure");
+    btnMemory = document.getElementById("btn-memory");
 
     if (speedInput) {
       speedStepsPerSecond = parseInt(speedInput.value, 10) || 5;
@@ -211,6 +232,13 @@ document.addEventListener("DOMContentLoaded", () => {
             resetAgent();
             if(btnIA) btnIA.innerText = "Lancer l'IA";
         });
+    }
+
+    if (btnMemory) {
+      btnMemory.addEventListener("click", () => {
+        resetMemory();
+        if (btnIA) btnIA.innerText = "Lancer l'IA";
+      });
     }
 
     if (btnTrain) {
